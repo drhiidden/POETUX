@@ -6,88 +6,64 @@
 
 set -euo pipefail
 
-# Colores
-readonly GREEN='\e[32m'
-readonly YELLOW='\e[33m'
-readonly BLUE='\e[34m'
-readonly RESET='\e[0m'
-
-print_success() { echo -e "${GREEN}✓ $1${RESET}"; }
-print_info() { echo -e "${BLUE}ℹ $1${RESET}"; }
-print_warning() { echo -e "${YELLOW}⚠ $1${RESET}"; }
+# Cargar bibliotecas
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "${SCRIPT_DIR}/../lib/common.sh"
+source "${SCRIPT_DIR}/../lib/installer.sh"
 
 ################################################################################
-# Funciones
+# Staging de paquetes
 ################################################################################
 
-update_system() {
-    print_info "Actualizando sistema..."
+ask_and_stage_packages() {
+    echo ""
+    print_info "═══════════════════════════════════════════════════════════"
+    if [[ "$CURRENT_LANG" == "es" ]]; then
+        print_info "  Módulo: Configuración Básica"
+    else
+        print_info "  Module: Basic Setup"
+    fi
+    print_info "═══════════════════════════════════════════════════════════"
+    echo ""
+    
+    # Actualización del sistema
+    if [[ "$CURRENT_LANG" == "es" ]]; then
+        print_info "Actualizando sistema..."
+    else
+        print_info "Updating system..."
+    fi
     sudo apt update
     sudo apt upgrade -y
     sudo apt autoremove -y
-    sudo apt autoclean
-    print_success "Sistema actualizado"
-}
-
-install_flatpak() {
+    
+    # Flatpak
+    if ! command -v flatpak &> /dev/null; then
+        stage_apt_package "flatpak"
+    fi
+    
+    # Utilidades comunes
+    stage_apt_package "curl"
+    stage_apt_package "wget"
+    stage_apt_package "htop"
+    stage_apt_package "gnome-tweaks"
+    stage_apt_package "neofetch"
+    stage_apt_package "git"
+    stage_apt_package "vim"
+    stage_apt_package "nano"
+    stage_apt_package "tree"
+    stage_apt_package "unzip"
+    stage_apt_package "zip"
+    stage_apt_package "software-properties-common"
+    stage_apt_package "apt-transport-https"
+    stage_apt_package "ca-certificates"
+    stage_apt_package "gnupg"
+    stage_apt_package "lsb-release"
+    
+    # Configurar Flathub si flatpak está instalado
     if command -v flatpak &> /dev/null; then
-        print_info "Flatpak ya está instalado"
-    else
-        print_info "Instalando Flatpak..."
-        sudo apt install -y flatpak
-        print_success "Flatpak instalado"
-    fi
-    
-    # Añadir Flathub si no está añadido
-    if ! flatpak remote-list | grep -q "flathub"; then
-        print_info "Añadiendo repositorio Flathub..."
-        sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-        print_success "Flathub añadido"
-    else
-        print_info "Flathub ya está configurado"
-    fi
-}
-
-install_utilities() {
-    print_info "Instalando utilidades comunes..."
-    
-    local packages=(
-        "curl"
-        "wget"
-        "htop"
-        "gnome-tweaks"
-        "neofetch"
-        "git"
-        "vim"
-        "nano"
-        "tree"
-        "unzip"
-        "zip"
-        "software-properties-common"
-        "apt-transport-https"
-        "ca-certificates"
-        "gnupg"
-        "lsb-release"
-    )
-    
-    for package in "${packages[@]}"; do
-        if ! dpkg -l | grep -q "^ii.*$package"; then
-            print_info "Instalando $package..."
-            sudo apt install -y "$package"
-        else
-            print_info "$package ya está instalado"
+        if ! flatpak remote-list | grep -q "flathub"; then
+            stage_custom_command "flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo"
         fi
-    done
-    
-    print_success "Utilidades instaladas"
-}
-
-configure_pop_shell() {
-    if [[ -d "$HOME/.local/share/gnome-shell/extensions/pop-shell@system76.com" ]] || \
-       [[ -d "/usr/share/gnome-shell/extensions/pop-shell@system76.com" ]]; then
-        print_info "Pop!_Shell detectado - todo OK"
-    else
-        print_warning "Pop!_Shell no detectado. En Pop!_OS debería estar preinstalado."
     fi
 }
 
@@ -96,28 +72,25 @@ configure_pop_shell() {
 ################################################################################
 
 main() {
-    echo ""
-    print_info "═══════════════════════════════════════════════════════════"
-    print_info "  Módulo: Configuración Básica"
-    print_info "═══════════════════════════════════════════════════════════"
-    echo ""
+    # Staging y ejecución
+    ask_and_stage_packages
     
-    update_system
-    echo ""
+    if ! execute_installation "basic"; then
+        return 1
+    fi
     
-    install_flatpak
+    # Post-instalación
     echo ""
-    
-    install_utilities
-    echo ""
-    
-    configure_pop_shell
-    echo ""
-    
     print_success "═══════════════════════════════════════════════════════════"
-    print_success "  Configuración básica completada"
+    if [[ "$CURRENT_LANG" == "es" ]]; then
+        print_success "  Configuración básica completada"
+    else
+        print_success "  Basic setup completed"
+    fi
     print_success "═══════════════════════════════════════════════════════════"
     echo ""
+    
+    return 0
 }
 
 main "$@"

@@ -4,22 +4,33 @@
 # Script principal con menú interactivo
 # Autor: POETUX Project
 # Licencia: MIT
+# Versión: 1.2.0
 ################################################################################
 
 set -euo pipefail
 
-# Colores para output
-readonly RED='\e[31m'
-readonly GREEN='\e[32m'
-readonly YELLOW='\e[33m'
-readonly BLUE='\e[34m'
-readonly MAGENTA='\e[35m'
-readonly CYAN='\e[36m'
-readonly RESET='\e[0m'
-
 # Directorio base del proyecto
 readonly SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 readonly MODULES_DIR="${SCRIPT_DIR}/modules"
+readonly LIB_DIR="${SCRIPT_DIR}/lib"
+
+# Cargar biblioteca común (incluye i18n, colores, logging, etc.)
+if [[ -f "${LIB_DIR}/common.sh" ]]; then
+    source "${LIB_DIR}/common.sh"
+else
+    # Fallback si no existe la librería
+    readonly RED='\e[31m'
+    readonly GREEN='\e[32m'
+    readonly YELLOW='\e[33m'
+    readonly BLUE='\e[34m'
+    readonly MAGENTA='\e[35m'
+    readonly CYAN='\e[36m'
+    readonly RESET='\e[0m'
+    print_error() { echo -e "${RED}✗ Error: $1${RESET}" >&2; }
+    print_error "Library not found: ${LIB_DIR}/common.sh"
+    print_error "Please ensure the project structure is intact"
+    exit 1
+fi
 
 ################################################################################
 # Funciones auxiliares
@@ -34,25 +45,9 @@ print_header() {
  / ____/ /_/ / /___  / /    
 /_/    \____/_____/ /_/     
                             
-Pop!_OS Extended Toolkit
+Pop!_OS Extended Toolkit v1.1.0
 EOF
     echo -e "${RESET}"
-}
-
-print_success() {
-    echo -e "${GREEN}✓ $1${RESET}"
-}
-
-print_error() {
-    echo -e "${RED}✗ Error: $1${RESET}"
-}
-
-print_warning() {
-    echo -e "${YELLOW}⚠ $1${RESET}"
-}
-
-print_info() {
-    echo -e "${BLUE}ℹ $1${RESET}"
 }
 
 check_root() {
@@ -101,20 +96,30 @@ load_module() {
 show_menu() {
     echo ""
     echo -e "${MAGENTA}═══════════════════════════════════════════════════════════${RESET}"
-    echo -e "${CYAN}  Menú Principal${RESET}"
+    echo -e "${CYAN}  $(t 'menu.title')${RESET}"
     echo -e "${MAGENTA}═══════════════════════════════════════════════════════════${RESET}"
     echo ""
-    echo "  1) Configuración Básica (actualizar sistema, flatpak, utilidades)"
-    echo "  2) Gaming (Steam, Lutris, Proton, MangoHUD, Gamemode)"
-    echo "  3) Desarrollo (Git, Python, Node.js, Rust, Docker, VSCode)"
-    echo "  4) Creadores de Contenido (OBS, GIMP, Krita, Kdenlive, Blender)"
-    echo "  5) Streamers (OBS + plugins, Discord, herramientas de audio)"
-    echo "  6) Ejecutar todos los módulos"
-    echo "  7) Información del sistema"
-    echo "  0) Salir"
+    echo "  1) $(t 'menu.basic')"
+    echo "  2) $(t 'menu.gaming')"
+    echo "  3) $(t 'menu.dev')"
+    echo "  4) $(t 'menu.creators')"
+    echo "  5) $(t 'menu.streamers')"
+    echo "  6) $(t 'menu.all')"
+    echo ""
+    echo -e "${YELLOW}━━━ $(if [[ "$CURRENT_LANG" == "es" ]]; then echo "Herramientas"; else echo "Tools"; fi) ━━━${RESET}"
+    echo "  7) $(t 'menu.backup')"
+    echo "  8) $(t 'menu.search')"
+    echo "  9) $(t 'menu.info')"
+    echo ""
+    if [[ "$CURRENT_LANG" == "es" ]]; then
+        echo "  L) Cambiar idioma (Actual: Español)"
+    else
+        echo "  L) Change language (Current: English)"
+    fi
+    echo "  0) $(t 'menu.exit')"
     echo ""
     echo -e "${MAGENTA}═══════════════════════════════════════════════════════════${RESET}"
-    echo -n "Selecciona una opción: "
+    echo -n "$(t 'prompt.select')"
 }
 
 show_system_info() {
@@ -168,17 +173,97 @@ run_all_modules() {
 # Main
 ################################################################################
 
+change_language() {
+    echo ""
+    if [[ "$CURRENT_LANG" == "es" ]]; then
+        echo "Idiomas disponibles:"
+        echo "  1) Español"
+        echo "  2) English"
+        echo ""
+        read -p "Selecciona idioma: " lang_choice
+    else
+        echo "Available languages:"
+        echo "  1) Español"
+        echo "  2) English"
+        echo ""
+        read -p "Select language: " lang_choice
+    fi
+    
+    case "$lang_choice" in
+        1)
+            save_language "es"
+            CURRENT_LANG="es"
+            print_success "Idioma cambiado a Español"
+            ;;
+        2)
+            save_language "en"
+            CURRENT_LANG="en"
+            print_success "Language changed to English"
+            ;;
+    esac
+}
+
 main() {
+    # Parsear argumentos de línea de comandos
+    while [[ $# -gt 0 ]]; do
+        case $1 in
+            --dry-run)
+                set_dry_run
+                shift
+                ;;
+            --lang)
+                save_language "$2"
+                CURRENT_LANG="$2"
+                shift 2
+                ;;
+            --help|-h)
+                echo "POETUX - Pop!_OS Extended Toolkit v1.1.0"
+                echo ""
+                echo "Usage: ./poet.sh [options]"
+                echo ""
+                echo "Options:"
+                echo "  --dry-run        Preview changes without executing"
+                echo "  --lang [es|en]   Set language (es=Spanish, en=English)"
+                echo "  --help, -h       Show this help message"
+                echo ""
+                exit 0
+                ;;
+            *)
+                print_error "Unknown option: $1"
+                exit 1
+                ;;
+        esac
+    done
+    
     check_root
     check_modules_dir
     
+    # Crear snapshot inicial automáticamente si no existe ninguno
+    if [[ ! -d "$POETUX_BACKUP_DIR" ]] || [[ -z "$(ls -A "$POETUX_BACKUP_DIR" 2>/dev/null)" ]]; then
+        if [[ "$CURRENT_LANG" == "es" ]]; then
+            print_info "Creando snapshot inicial del sistema..."
+        else
+            print_info "Creating initial system snapshot..."
+        fi
+        create_backup_snapshot "initial_$(date +%Y%m%d)" >/dev/null 2>&1
+    fi
+    
     print_header
     
-    echo -e "${GREEN}Bienvenido a POET - Pop!_OS Extended Toolkit${RESET}"
+    echo -e "${GREEN}$(t 'msg.welcome')${RESET}"
     echo ""
-    echo "Este toolkit te ayudará a configurar tu sistema Pop!_OS"
-    echo "de forma modular y personalizada según tus necesidades."
+    echo "$(t 'msg.description')"
+    if [[ "$CURRENT_LANG" == "es" ]]; then
+        echo "de forma modular y personalizada según tus necesidades."
+    else
+        echo "in a modular and personalized way according to your needs."
+    fi
     echo ""
+    
+    if [[ "$DRY_RUN" == true ]]; then
+        print_warning "DRY RUN MODE ENABLED - No changes will be made"
+        echo ""
+    fi
     
     while true; do
         show_menu
@@ -204,21 +289,48 @@ main() {
                 run_all_modules
                 ;;
             7)
+                # Backup y Restauración
+                if [[ -f "${LIB_DIR}/backup.sh" ]]; then
+                    source "${LIB_DIR}/backup.sh"
+                    main
+                else
+                    print_error "Backup module not found"
+                fi
+                ;;
+            8)
+                # Búsqueda de paquetes
+                if [[ -f "${LIB_DIR}/search.sh" ]]; then
+                    source "${LIB_DIR}/search.sh"
+                    interactive_search
+                else
+                    print_error "Search module not found"
+                fi
+                ;;
+            9)
                 show_system_info
+                ;;
+            [Ll])
+                change_language
                 ;;
             0)
                 echo ""
-                print_success "¡Gracias por usar POET! 🚀"
+                print_success "$(t 'msg.thanks')"
+                echo ""
+                if [[ "$CURRENT_LANG" == "es" ]]; then
+                    print_info "Logs guardados en: ${POETUX_LOG_DIR}"
+                else
+                    print_info "Logs saved in: ${POETUX_LOG_DIR}"
+                fi
                 echo ""
                 exit 0
                 ;;
             *)
-                print_error "Opción no válida. Por favor, selecciona una opción del menú."
+                print_error "$(t 'msg.invalid_option')"
                 ;;
         esac
         
         echo ""
-        read -p "Presiona Enter para volver al menú principal..."
+        read -p "$(t 'msg.press_enter')"
     done
 }
 
