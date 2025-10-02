@@ -6,126 +6,70 @@
 
 set -euo pipefail
 
-# Colores
-readonly GREEN='\e[32m'
-readonly YELLOW='\e[33m'
-readonly BLUE='\e[34m'
-readonly RESET='\e[0m'
-
-print_success() { echo -e "${GREEN}✓ $1${RESET}"; }
-print_info() { echo -e "${BLUE}ℹ $1${RESET}"; }
-print_warning() { echo -e "${YELLOW}⚠ $1${RESET}"; }
+# Cargar bibliotecas
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "${SCRIPT_DIR}/../lib/common.sh"
+source "${SCRIPT_DIR}/../lib/installer.sh"
 
 ################################################################################
-# Funciones
+# Staging de paquetes
 ################################################################################
 
-ask_yes_no() {
-    local prompt="$1"
-    local response
-    while true; do
-        read -p "$prompt (s/n): " response
-        case $response in
-            [Ss]* ) return 0;;
-            [Nn]* ) return 1;;
-            * ) echo "Por favor responde s (sí) o n (no).";;
-        esac
-    done
-}
-
-install_obs() {
-    if ask_yes_no "¿Instalar OBS Studio?"; then
-        print_info "Instalando OBS Studio..."
-        
-        # Añadir PPA oficial de OBS
-        sudo add-apt-repository -y ppa:obsproject/obs-studio
-        sudo apt update
-        sudo apt install -y obs-studio
-        
-        print_success "OBS Studio instalado"
+ask_and_stage_packages() {
+    echo ""
+    print_info "═══════════════════════════════════════════════════════════"
+    if [[ "$CURRENT_LANG" == "es" ]]; then
+        print_info "  Módulo: Creadores de Contenido"
     else
-        print_info "Saltando instalación de OBS Studio"
+        print_info "  Module: Content Creators"
     fi
-}
-
-install_gimp() {
-    if ask_yes_no "¿Instalar GIMP (editor de imágenes)?"; then
-        print_info "Instalando GIMP..."
-        flatpak install -y flathub org.gimp.GIMP
-        print_success "GIMP instalado"
-    else
-        print_info "Saltando instalación de GIMP"
+    print_info "═══════════════════════════════════════════════════════════"
+    echo ""
+    
+    # OBS Studio
+    if ask_yes_no "$(t 'ask.install_obs')" "s"; then
+        stage_ppa "ppa:obsproject/obs-studio"
+        stage_apt_package "obs-studio"
     fi
-}
-
-install_krita() {
-    if ask_yes_no "¿Instalar Krita (pintura digital)?"; then
-        print_info "Instalando Krita..."
-        flatpak install -y flathub org.kde.krita
-        print_success "Krita instalado"
-    else
-        print_info "Saltando instalación de Krita"
+    
+    # GIMP
+    if ask_yes_no "$(t 'ask.install_gimp')" "s"; then
+        stage_flatpak_package "org.gimp.GIMP"
     fi
-}
-
-install_kdenlive() {
-    if ask_yes_no "¿Instalar Kdenlive (editor de video)?"; then
-        print_info "Instalando Kdenlive..."
-        flatpak install -y flathub org.kde.kdenlive
-        print_success "Kdenlive instalado"
-    else
-        print_info "Saltando instalación de Kdenlive"
+    
+    # Krita
+    if ask_yes_no "$(t 'ask.install_krita')" "s"; then
+        stage_flatpak_package "org.kde.krita"
     fi
-}
-
-install_blender() {
-    if ask_yes_no "¿Instalar Blender (modelado 3D)?"; then
-        print_info "Instalando Blender..."
-        flatpak install -y flathub org.blender.Blender
-        print_success "Blender instalado"
-    else
-        print_info "Saltando instalación de Blender"
+    
+    # Inkscape
+    if ask_yes_no "$(t 'ask.install_inkscape')" "s"; then
+        stage_flatpak_package "org.inkscape.Inkscape"
     fi
-}
-
-install_inkscape() {
-    if ask_yes_no "¿Instalar Inkscape (gráficos vectoriales)?"; then
-        print_info "Instalando Inkscape..."
-        flatpak install -y flathub org.inkscape.Inkscape
-        print_success "Inkscape instalado"
-    else
-        print_info "Saltando instalación de Inkscape"
+    
+    # Kdenlive
+    if ask_yes_no "$(t 'ask.install_kdenlive')" "s"; then
+        stage_flatpak_package "org.kde.kdenlive"
     fi
-}
-
-install_audacity() {
-    if ask_yes_no "¿Instalar Audacity (editor de audio)?"; then
-        print_info "Instalando Audacity..."
-        sudo apt install -y audacity
-        print_success "Audacity instalado"
-    else
-        print_info "Saltando instalación de Audacity"
+    
+    # Blender
+    if ask_yes_no "$(t 'ask.install_blender')" "s"; then
+        stage_flatpak_package "org.blender.Blender"
     fi
-}
-
-install_davinci_resolve_deps() {
-    if ask_yes_no "¿Preparar sistema para DaVinci Resolve? (solo dependencias)"; then
-        print_info "Instalando dependencias para DaVinci Resolve..."
-        
-        # Dependencias necesarias para DaVinci Resolve
-        sudo apt install -y \
-            libfuse2 \
-            libssl1.1 \
-            libapr1 \
-            libaprutil1 \
-            libnuma1 \
-            ocl-icd-opencl-dev
-        
-        print_success "Dependencias instaladas"
-        print_info "Deberás descargar DaVinci Resolve manualmente desde:"
-        echo "  https://www.blackmagicdesign.com/products/davinciresolve"
-    else
-        print_info "Saltando preparación para DaVinci Resolve"
+    
+    # Audacity
+    if ask_yes_no "$(t 'ask.install_audacity')" "s"; then
+        stage_apt_package "audacity"
+    fi
+    
+    # DaVinci Resolve deps
+    if ask_yes_no "$(t 'ask.davinci_deps')" "n"; then
+        stage_apt_package "libfuse2"
+        stage_apt_package "libssl1.1" || stage_apt_package "libssl3"
+        stage_apt_package "libapr1"
+        stage_apt_package "libaprutil1"
+        stage_apt_package "libnuma1"
+        stage_apt_package "ocl-icd-opencl-dev"
     fi
 }
 
@@ -134,46 +78,36 @@ install_davinci_resolve_deps() {
 ################################################################################
 
 main() {
-    echo ""
-    print_info "═══════════════════════════════════════════════════════════"
-    print_info "  Módulo: Creadores de Contenido"
-    print_info "═══════════════════════════════════════════════════════════"
-    echo ""
+    # Staging
+    ask_and_stage_packages
     
-    install_obs
-    echo ""
+    # Ejecución
+    if ! execute_installation "creators"; then
+        return 1
+    fi
     
-    install_gimp
+    # Post-instalación
     echo ""
-    
-    install_krita
-    echo ""
-    
-    install_inkscape
-    echo ""
-    
-    install_kdenlive
-    echo ""
-    
-    install_blender
-    echo ""
-    
-    install_audacity
-    echo ""
-    
-    install_davinci_resolve_deps
-    echo ""
-    
     print_success "═══════════════════════════════════════════════════════════"
-    print_success "  Módulo de Creadores de Contenido completado"
+    if [[ "$CURRENT_LANG" == "es" ]]; then
+        print_success "  Módulo de Creadores completado"
+        echo ""
+        print_info "Notas:"
+        echo "  • OBS: configura escenas y fuentes de video/audio"
+        echo "  • Para mejor rendimiento: usa NVENC/VAAPI"
+        echo "  • DaVinci: descarga desde blackmagicdesign.com"
+    else
+        print_success "  Content Creators module completed"
+        echo ""
+        print_info "Notes:"
+        echo "  • OBS: configure scenes and video/audio sources"
+        echo "  • For better performance: use NVENC/VAAPI"
+        echo "  • DaVinci: download from blackmagicdesign.com"
+    fi
     print_success "═══════════════════════════════════════════════════════════"
     echo ""
-    print_info "Notas:"
-    echo "  • OBS Studio: configura tus escenas y fuentes de video/audio"
-    echo "  • Para mejor rendimiento en OBS: usa codificación por hardware (NVENC/VAAPI)"
-    echo "  • Kdenlive y Blender pueden requerir GPU potente para renderizado"
-    echo ""
+    
+    return 0
 }
 
 main "$@"
-
