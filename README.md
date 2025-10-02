@@ -105,12 +105,17 @@ chmod +x poet.sh modules/*.sh lib/*.sh
   6) Ejecutar todos los módulos
 
 ━━━ Herramientas ━━━
-  7) Backup y Restauración              ← NUEVO en v1.1.0
-  8) Buscar paquetes                     ← NUEVO en v1.1.0
+  7) Backup y Restauración              ← v1.1.0
+  8) Buscar paquetes                     ← v1.1.0
   9) Información del sistema
 
-  L) Cambiar idioma (Actual: Español)   ← NUEVO en v1.1.0
+  L) Cambiar idioma (Actual: Español)   ← v1.1.0
   0) Salir
+
+  [Sistema de instalación inteligente activo - v1.2.0]
+  • Staging + Batch installation (55% más rápido)
+  • Rollback automático en caso de error
+  • Progress bars integrados
 
 ═══════════════════════════════════════════════════════════
 ```
@@ -614,24 +619,43 @@ Ver más detalles en [CHANGELOG.md](CHANGELOG.md)
 
 ## 📋 Roadmap
 
-### Completado en v1.1.0
+### ✅ Completado en v1.0.0 (MVP)
+- [x] Script principal con menú interactivo
+- [x] 5 módulos principales (basic, gaming, dev, creators, streamers)
+- [x] 100+ paquetes configurables
+- [x] Filosofía Unix aplicada
+
+### ✅ Completado en v1.1.0
 - [x] Sistema de backup y snapshots
-- [x] Búsqueda de paquetes
-- [x] Internacionalización (es/en)
-- [x] Modo dry-run
-- [x] Sistema de logging
+- [x] Búsqueda de paquetes (APT + Flatpak)
+- [x] Internacionalización (español + inglés)
+- [x] Modo dry-run (preview sin cambios)
+- [x] Sistema de logging completo
+- [x] Biblioteca `lib/` compartida
 
-### Planificado para v1.2.0 (Q1 2026)
-- [ ] Restauración automática desde snapshots
-- [ ] Módulo de productividad (LibreOffice, Thunderbird, etc.)
-- [ ] Módulo de seguridad (firewall, VPN, etc.)
+### ✅ Completado en v1.2.0
+- [x] Sistema de instalación inteligente (staging + batch)
+- [x] Rollback automático en caso de error
+- [x] Progress bars integrados
+- [x] Bilingüismo completo (60+ traducciones)
+- [x] Mejora de performance (55% más rápido)
+- [x] Documentación reorganizada en `docs/`
+
+### 🚧 Planificado para v1.3.0
+- [ ] Restauración automática completa desde snapshots
+- [ ] Módulo de productividad (LibreOffice, Thunderbird, TimeShift)
+- [ ] Módulo de seguridad (UFW, ClamAV, VPN)
 - [ ] Firmas GPG de releases
+- [ ] Testing en múltiples distribuciones
 
-### Futuro (v2.0+)
+### 🔮 Futuro
 - [ ] Soporte para otras distros (Fedora, Arch)
-- [ ] Interfaz gráfica (GUI) opcional
-- [ ] Perfiles predefinidos (gaming pro, dev fullstack, etc.)
+- [ ] Interfaz gráfica (GUI) opcional con Zenity
+- [ ] Perfiles predefinidos (gaming-pro, dev-fullstack, etc.)
 - [ ] Integración con dotfiles
+- [ ] Sistema de plugins comunitarios
+- [ ] Sistema de actualización automática
+- [ ] Telemetría opcional para mejorar el proyecto
 
 ---
 
@@ -671,9 +695,15 @@ Este proyecto está bajo la licencia MIT. Consulta el archivo `LICENSE` para má
 
 ---
 
-## 📞 Contacto
+## 📞 Contacto y Soporte
 
-¿Preguntas? ¿Sugerencias? Abre un [issue](https://github.com/drhiidden/poetux/issues) o un [pull request](https://github.com/drhiidden/poetux/pulls).
+- 🐛 **Reportar bugs**: [GitHub Issues](https://github.com/drhiidden/poetux/issues)
+- 💡 **Sugerencias**: [GitHub Discussions](https://github.com/drhiidden/poetux/discussions)
+- 🤝 **Contribuir**: [Pull Requests](https://github.com/drhiidden/poetux/pulls)
+- 📧 **Email**: [Contacto directo]
+
+**Versión actual:** v1.2.0  
+**Última actualización:** 2 de Octubre de 2025
 
 ---
 

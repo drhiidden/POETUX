@@ -159,20 +159,21 @@ El formato está basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.
 
 ## Roadmap Futuro
 
-### [1.2.0] - Planificado Q1 2026
-- [ ] Módulo de productividad (LibreOffice, Thunderbird)
-- [ ] Módulo de seguridad (UFW, VPNs, password managers)
+### [1.3.0] - Próximamente
+- [ ] Módulo de productividad (LibreOffice, Thunderbird, TimeShift)
+- [ ] Módulo de seguridad (UFW, ClamAV, VPN, password managers)
 - [ ] Testing en múltiples distribuciones
-- [ ] Restauración desde snapshots
+- [ ] Restauración automática desde snapshots
 - [ ] Firmas GPG de releases
 
-### [1.5.0] - Planificado Q2 2026
+### [1.x.x] - Futuro
 - [ ] Sistema de perfiles predefinidos
 - [ ] Integración con dotfiles
 - [ ] API para extensiones
 - [ ] Documentación en más idiomas
+- [ ] Sistema de actualización automática
 
-### [2.0.0] - Planificado Q4 2026
+### [2.0.0] - Largo plazo
 - [ ] Interfaz gráfica (GUI) con Zenity/YAD
 - [ ] Soporte para Fedora y Arch
 - [ ] Sistema de plugins comunitarios
