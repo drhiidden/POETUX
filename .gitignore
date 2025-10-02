@@ -1,0 +1,50 @@
+# POETUX - Archivos a ignorar
+
+# Logs
+*.log
+logs/
+
+# Archivos temporales
+*.tmp
+*.swp
+*.swo
+*~
+
+# Archivos de backup
+*.bak
+*.backup
+
+# Directorios de prueba
+test/
+testing/
+
+# Archivos de IDE
+.vscode/
+.idea/
+*.code-workspace
+
+# OS específicos
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Archivos personales de configuración
+config.local
+
+# Node modules (si en el futuro usamos node)
+node_modules/
+
+# Python (si en el futuro usamos python)
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+
+# Rust (si en el futuro usamos rust)
+target/
+Cargo.lock
+
+# Archivos específicos del usuario
+.env
+.env.local
