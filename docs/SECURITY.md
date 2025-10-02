@@ -289,11 +289,11 @@ git diff origin/main
 
 ### Firma GPG (Futuro)
 
-**Planificado para v1.2.0:**
+**Planificado para v1.3.0:**
 
 ```bash
 # Verificar firma GPG del release
-gpg --verify poetux-1.2.0.tar.gz.asc
+gpg --verify poetux-1.3.0.tar.gz.asc
 ```
 
 ---
@@ -450,6 +450,6 @@ Los reportadores de vulnerabilidades serán reconocidos en:
 ---
 
 **Última revisión:** 2 de Octubre de 2025  
-**Próxima revisión:** Q1 2026  
+**Próxima revisión:** Con cada release  
 **Versión de documento:** 1.2.0
 
