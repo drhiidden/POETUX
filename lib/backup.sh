@@ -7,8 +7,8 @@
 set -euo pipefail
 
 # Cargar funciones comunes
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-source "${SCRIPT_DIR}/common.sh"
+BACKUP_SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "${BACKUP_SCRIPT_DIR}/common.sh"
 
 ################################################################################
 # Menú de Backup

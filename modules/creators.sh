@@ -7,9 +7,9 @@
 set -euo pipefail
 
 # Cargar bibliotecas
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-source "${SCRIPT_DIR}/../lib/common.sh"
-source "${SCRIPT_DIR}/../lib/installer.sh"
+CREATORS_SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "${CREATORS_SCRIPT_DIR}/../lib/common.sh"
+source "${CREATORS_SCRIPT_DIR}/../lib/installer.sh"
 
 ################################################################################
 # Staging de paquetes

@@ -7,8 +7,8 @@
 set -euo pipefail
 
 # Cargar funciones comunes
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-source "${SCRIPT_DIR}/common.sh"
+SEARCH_SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "${SEARCH_SCRIPT_DIR}/common.sh"
 
 ################################################################################
 # Búsqueda Interactiva
