@@ -7,8 +7,8 @@
 set -euo pipefail
 
 # Cargar funciones comunes
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-source "${SCRIPT_DIR}/common.sh"
+INSTALLER_SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "${INSTALLER_SCRIPT_DIR}/common.sh"
 
 ################################################################################
 # Variables Globales de Instalación

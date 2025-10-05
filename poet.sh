@@ -19,13 +19,13 @@ if [[ -f "${LIB_DIR}/common.sh" ]]; then
     source "${LIB_DIR}/common.sh"
 else
     # Fallback si no existe la librería
-    readonly RED='\e[31m'
-    readonly GREEN='\e[32m'
-    readonly YELLOW='\e[33m'
-    readonly BLUE='\e[34m'
-    readonly MAGENTA='\e[35m'
-    readonly CYAN='\e[36m'
-    readonly RESET='\e[0m'
+    RED='\e[31m'
+    GREEN='\e[32m'
+    YELLOW='\e[33m'
+    BLUE='\e[34m'
+    MAGENTA='\e[35m'
+    CYAN='\e[36m'
+    RESET='\e[0m'
     print_error() { echo -e "${RED}✗ Error: $1${RESET}" >&2; }
     print_error "Library not found: ${LIB_DIR}/common.sh"
     print_error "Please ensure the project structure is intact"
@@ -45,7 +45,7 @@ print_header() {
  / ____/ /_/ / /___  / /    
 /_/    \____/_____/ /_/     
                             
-Pop!_OS Extended Toolkit v1.1.0
+Pop!_OS Extended Toolkit v1.2.0
 EOF
     echo -e "${RESET}"
 }
@@ -217,7 +217,7 @@ main() {
                 shift 2
                 ;;
             --help|-h)
-                echo "POETUX - Pop!_OS Extended Toolkit v1.1.0"
+                echo "POETUX - Pop!_OS Extended Toolkit v1.2.0"
                 echo ""
                 echo "Usage: ./poet.sh [options]"
                 echo ""
@@ -291,8 +291,7 @@ main() {
             7)
                 # Backup y Restauración
                 if [[ -f "${LIB_DIR}/backup.sh" ]]; then
-                    source "${LIB_DIR}/backup.sh"
-                    main
+                    bash "${LIB_DIR}/backup.sh"
                 else
                     print_error "Backup module not found"
                 fi
@@ -300,8 +299,7 @@ main() {
             8)
                 # Búsqueda de paquetes
                 if [[ -f "${LIB_DIR}/search.sh" ]]; then
-                    source "${LIB_DIR}/search.sh"
-                    interactive_search
+                    bash "${LIB_DIR}/search.sh"
                 else
                     print_error "Search module not found"
                 fi

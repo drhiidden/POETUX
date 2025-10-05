@@ -4,6 +4,10 @@
 # Funciones compartidas entre todos los módulos
 ################################################################################
 
+# Include guard para evitar carga múltiple
+[[ -n "${POETUX_COMMON_LOADED:-}" ]] && return 0
+readonly POETUX_COMMON_LOADED=1
+
 set -euo pipefail
 
 # Colores para output
