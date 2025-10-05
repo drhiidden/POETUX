@@ -211,7 +211,11 @@ poetux/
 │   ├── INSTALL.md                  # Guía de instalación detallada
 │   ├── QUICKSTART.md               # Inicio rápido en 3 pasos ⚡
 │   ├── STRUCTURE.md                # Descripción completa de la estructura
-│   └── SECURITY.md                 # Guía de seguridad completa 🔒
+│   ├── SECURITY.md                 # Seguridad de POETUX (herramienta) 🔒
+│   └── security/                   # Documentación de componentes de seguridad 🛡️
+│       ├── README.md               # Índice de documentación de seguridad
+│       ├── MODULE.md               # Módulo de seguridad del sistema (UFW, AppArmor, AIDE)
+│       └── PROFILES.md             # Perfiles reforzados para apps (Cursor, Brave)
 │
 └── 📄 Archivos raíz
     ├── README.md                   # Este archivo
@@ -376,7 +380,10 @@ Si encuentras un problema de seguridad:
 - < 7 días: Evaluación inicial
 - < 30 días: Fix o plan de mitigación
 
-Ver guía completa: [`docs/SECURITY.md`](docs/SECURITY.md)
+Ver documentación completa:
+- **Seguridad de POETUX:** [`docs/SECURITY.md`](docs/SECURITY.md)
+- **Módulo de seguridad del sistema:** [`docs/security/MODULE.md`](docs/security/MODULE.md)
+- **Perfiles avanzados de aplicaciones:** [`docs/security/PROFILES.md`](docs/security/PROFILES.md)
 
 ---
 
@@ -490,7 +497,7 @@ du -sh ~/.local/share/poetux/
 
 - 📖 **Instalación detallada**: [`docs/INSTALL.md`](docs/INSTALL.md)
 - 🚀 **Inicio rápido**: [`docs/QUICKSTART.md`](docs/QUICKSTART.md)
-- 🔒 **Seguridad**: [`docs/SECURITY.md`](docs/SECURITY.md)
+- 🔒 **Seguridad**: [`docs/SECURITY.md`](docs/SECURITY.md) | [`docs/security/`](docs/security/)
 - 📁 **Estructura**: [`docs/STRUCTURE.md`](docs/STRUCTURE.md)
 - 📝 **Cambios**: [`CHANGELOG.md`](CHANGELOG.md)
 - 🐛 **Issues**: [GitHub Issues](https://github.com/drhiidden/poetux/issues)
