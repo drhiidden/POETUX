@@ -29,6 +29,19 @@ readonly POETUX_LANG_FILE="${POETUX_DATA_DIR}/lang"
 mkdir -p "$POETUX_DATA_DIR" "$POETUX_BACKUP_DIR" "$POETUX_LOG_DIR"
 
 ################################################################################
+# Funciones de Seguridad
+################################################################################
+
+# Verificar que no se ejecute como root
+check_root() {
+    if [[ $EUID -eq 0 ]]; then
+        echo -e "${RED}✗ Error: No ejecutes este script como root.${RESET}"
+        echo -e "${YELLOW}El script usará sudo cuando sea necesario.${RESET}"
+        exit 1
+    fi
+}
+
+################################################################################
 # Funciones de Logging
 ################################################################################
 

@@ -17,7 +17,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Shell](https://img.shields.io/badge/Shell-Bash-4EAA25?logo=gnu-bash&logoColor=white)](https://www.gnu.org/software/bash/)
 [![Pop!_OS](https://img.shields.io/badge/Pop!__OS-Compatible-48B9C7)](https://pop.system76.com/)
-[![Version](https://img.shields.io/badge/version-1.2.0-blue.svg)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-1.3.0-blue.svg)](CHANGELOG.md)
 [![i18n](https://img.shields.io/badge/i18n-es%20|%20en-green.svg)]()
 
 </div>
@@ -37,7 +37,7 @@
 - 🎙️ **Perfil Streamers**: OBS + plugins, Discord, audio tools
 - 🔧 **Configuración Básica**: actualización de sistema, Flatpak, utilidades
 
-#### Herramientas Integradas (v1.2.0)
+#### Herramientas Integradas (v1.3.0)
 - 🧠 **Sistema de Staging**: Preparación inteligente antes de instalar
 - 🚀 **Batch Installation**: 55% más rápido (instala múltiples paquetes juntos)
 - 🔄 **Rollback Automático**: Si falla, ofrece desinstalar cambios
@@ -47,6 +47,7 @@
 - 🔒 **Modo Dry Run**: Vista previa de cambios sin ejecutarlos
 - 📝 **Logging Completo**: Auditoría de todas las operaciones
 - 📊 **Progress Bars**: Barras visuales integradas durante instalación
+- 🛡️ **Seguridad Avanzada**: DNS seguros, VPN killswitch, VMs desechables 🆕
 
 ### 🎯 Filosofía
 
@@ -55,6 +56,7 @@
 - **Respeto al usuario**: no cambia configuraciones críticas sin confirmar
 - **Compatibilidad**: funciona en cualquier derivada de Ubuntu/Debian
 - **Transparencia**: código limpio, comentado y fácil de auditar
+- **Seguridad**: herramientas avanzadas para navegación y privacidad 🆕
 
 ---
 
@@ -112,10 +114,10 @@ chmod +x poet.sh modules/*.sh lib/*.sh
   L) Cambiar idioma (Actual: Español)   ← v1.1.0
   0) Salir
 
-  [Sistema de instalación inteligente activo - v1.2.0]
+  [Sistema de instalación inteligente activo - v1.3.0]
   • Staging + Batch installation (55% más rápido)
   • Rollback automático en caso de error
-  • Progress bars integrados
+  • Seguridad avanzada integrada 🆕
 
 ═══════════════════════════════════════════════════════════
 ```
@@ -648,10 +650,19 @@ Ver más detalles en [CHANGELOG.md](CHANGELOG.md)
 - [x] Mejora de performance (55% más rápido)
 - [x] Documentación reorganizada en `docs/`
 
-### 🚧 Planificado para v1.3.0
+### ✅ Completado en v1.3.0
+- [x] DNS Seguros (Quad9, Cloudflare, NextDNS)
+- [x] Aislamiento avanzado de navegadores (Firejail)
+- [x] VPN Killswitch (WireGuard + OpenVPN)
+- [x] VMs Desechables (QEMU/KVM)
+- [x] Menú interactivo del módulo de seguridad
+- [x] Integración de hidden-browser-security
+- [x] Documentación completa (BROWSER_SECURITY.md)
+
+### 🚧 Planificado para v1.4.0
 - [ ] Restauración automática completa desde snapshots
 - [ ] Módulo de productividad (LibreOffice, Thunderbird, TimeShift)
-- [ ] Módulo de seguridad (UFW, ClamAV, VPN)
+- [ ] Perfiles de seguridad por tipo de usuario
 - [ ] Firmas GPG de releases
 - [ ] Testing en múltiples distribuciones
 
@@ -709,8 +720,8 @@ Este proyecto está bajo la licencia MIT. Consulta el archivo `LICENSE` para má
 - 🤝 **Contribuir**: [Pull Requests](https://github.com/drhiidden/poetux/pulls)
 - 📧 **Email**: [Contacto directo]
 
-**Versión actual:** v1.2.0  
-**Última actualización:** 2 de Octubre de 2025
+**Versión actual:** v1.3.0  
+**Última actualización:** 27 de Octubre de 2025
 
 ---
 

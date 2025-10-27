@@ -45,7 +45,7 @@ print_header() {
  / ____/ /_/ / /___  / /    
 /_/    \____/_____/ /_/     
                             
-Pop!_OS Extended Toolkit v1.2.0
+Pop!_OS Extended Toolkit v1.3.0
 EOF
     echo -e "${RESET}"
 }
@@ -217,7 +217,7 @@ main() {
                 shift 2
                 ;;
             --help|-h)
-                echo "POETUX - Pop!_OS Extended Toolkit v1.2.0"
+                echo "POETUX - Pop!_OS Extended Toolkit v1.3.0"
                 echo ""
                 echo "Usage: ./poet.sh [options]"
                 echo ""

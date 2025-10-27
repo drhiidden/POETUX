@@ -6,6 +6,111 @@ El formato está basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.
 
 ---
 
+## [1.3.0] - 2025-10-27
+
+### 🛡️ Seguridad Avanzada (Integración de hidden-browser-security)
+
+#### 🚀 Añadido
+
+##### Módulo de Seguridad Extendido
+- ✅ **DNS Seguros**: Configuración interactiva de proveedores DNS seguros
+  - Quad9 (bloqueo de malware + privacidad)
+  - Cloudflare (velocidad)
+  - NextDNS (control parental)
+  - DNS personalizados
+  - Detección automática de conexiones NetworkManager
+  - Verificación post-configuración
+
+- ✅ **Aislamiento Avanzado de Navegadores**: 
+  - Perfiles Firejail personalizados para máximo aislamiento
+  - Directorio sandbox dedicado (`~/sandbox-browser`)
+  - Perfil `browser-isolated.profile` con:
+    - Home restringido solo a sandbox
+    - Sin acceso a dispositivos (DVD, impresoras, USB)
+    - Protección X11 keylogging (Xvfb)
+    - D-Bus deshabilitado
+    - Capabilities del kernel eliminadas
+
+- ✅ **VPN Killswitch**: 
+  - Configuración automática de firewall para VPN
+  - Soporte WireGuard y OpenVPN
+  - Bloqueo total de tráfico si VPN se desconecta
+  - Detección de interfaces VPN
+  - Configuración reversible
+
+- ✅ **VMs Desechables**:
+  - Asistente de creación de imágenes QCOW2
+  - Instalación automática de herramientas de virtualización
+  - Guía paso a paso para configurar VMs
+  - Soporte para snapshots efímeros
+  - Directorio organizado `~/VMs/`
+
+##### Interfaz del Módulo de Seguridad
+- ✅ **Menú interactivo mejorado**: 13 opciones organizadas
+  - Configuración Completa (todo en uno)
+  - Configuración Básica (esenciales)
+  - Componentes individuales (UFW, AppArmor, AIDE, Firejail)
+  - Seguridad avanzada (DNS, VPN, VMs, Hardening)
+  - Herramientas (instalación opcional, resumen, auditoría)
+
+##### Herramientas Adicionales
+- ✅ **WireGuard**: Opción de instalación integrada
+- ✅ **Flatpak**: Añadido brave-browser a apps sandboxeadas
+
+#### 📚 Documentación
+
+##### Nueva Documentación
+- ✅ **[BROWSER_SECURITY.md](docs/security/BROWSER_SECURITY.md)**: Guía completa (8,000+ palabras)
+  - DNS Seguros: Configuración detallada de cada proveedor
+  - 3 niveles de aislamiento de navegadores
+  - VPN Killswitch: Setup y troubleshooting
+  - VMs Desechables: De cero a producción
+  - Casos de uso para cada escenario
+  - Troubleshooting y FAQ
+
+##### Documentación Actualizada
+- ✅ **[docs/security/README.md](docs/security/README.md)**: 
+  - Añadido Nivel 3: Navegación Segura
+  - Añadido Nivel 4: Paranoia Máxima
+  - Comparación de impacto en rendimiento
+  - FAQ sobre integración de hidden-browser-security
+
+##### Proyecto hidden-browser-security
+- ✅ **README actualizado**: Indica migración a POETUX
+- ✅ **MIGRATE_TO_POETUX.md**: Guía completa de migración
+  - Instalación limpia vs preservando configuraciones
+  - Checklist de migración
+  - Comparación de comandos antes/después
+  - Casos de uso avanzados
+  - Troubleshooting común
+
+#### 🔧 Cambiado
+
+##### Módulo security.sh
+- **Estructura mejorada**: 960 líneas (+440 líneas nuevas)
+- **Funciones nuevas**:
+  - `configure_browser_isolation()`: Perfil Firejail avanzado
+  - `configure_secure_dns()`: DNS seguros interactivo
+  - `configure_vpn_killswitch()`: VPN killswitch con UFW
+  - `setup_secure_vm()`: VMs desechables
+  - `create_disposable_vm_image()`: Asistente de imágenes QCOW2
+  - `show_security_menu()`: Menú interactivo
+- **Main refactorizado**: Loop con menú vs ejecución lineal
+
+##### Mejoras de UX
+- 🎨 **Menú visual**: Secciones organizadas con separadores
+- 💬 **Mensajes informativos**: Explicaciones antes de cada acción
+- ⚠️ **Advertencias importantes**: Para configuraciones críticas (killswitch)
+- 📝 **Instrucciones paso a paso**: Para VMs y configuraciones complejas
+
+### 🐛 Corregido
+- Corrección menor en permisos del sandbox de navegadores
+
+### 🗑️ Deprecado
+- **hidden-browser-security** (proyecto separado): Funcionalidades integradas en POETUX
+
+---
+
 ## [1.2.0] - 2025-10-02
 
 ### 🚀 Añadido
