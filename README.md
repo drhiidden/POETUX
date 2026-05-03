@@ -1,4 +1,14 @@
-# 🚀 POETUX - Pop!_OS Extended Toolkit
+![POETUX banner](docs/banner.png)
+
+# POETUX — Pop!_OS Extended Toolkit
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Python](https://img.shields.io/badge/Python-3.x-blue.svg)](https://python.org)
+[![Pop!_OS](https://img.shields.io/badge/Pop!__OS-22.04+-orange.svg)](https://pop.system76.com/)
+[![Version](https://img.shields.io/badge/version-1.3.0-brightgreen.svg)](#)
+![visitors](https://komarev.com/ghpvc/?username=drhiidden&repo=POETUX&color=00ff88&style=flat-square)
+
+**Your Pop!_OS, automated.**
 
 <div align="center">
 
@@ -731,3 +741,7 @@ Este proyecto está bajo la licencia MIT. Consulta el archivo `LICENSE` para má
 
 </div>
 
+
+## Metodología
+
+Desarrollado con [HCP (Human-Code-AI Protocol)](https://github.com/haletheia/human-code-ai-protocol) — protocolo git-native para Context Engineering.
