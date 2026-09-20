@@ -68,7 +68,7 @@ El **Módulo de Seguridad** de POETUX es una solución integral para fortalecer 
 
 ```bash
 # Desde el directorio POETUX
-cd /home/doctorhidden/laboratorio/programas/POETUX
+cd "$HOME/laboratorio/programas/POETUX"
 
 # Dar permisos de ejecución
 chmod +x modules/security.sh
@@ -298,7 +298,7 @@ sudo nano /etc/firejail/mi-app.profile
 # Contenido de ejemplo:
 include /etc/firejail/default.profile
 blacklist /home
-whitelist /home/user/Documents
+whitelist $HOME/Documents
 ```
 
 ---
@@ -339,10 +339,10 @@ sudo freshclam
 sudo systemctl start clamav-freshclam
 
 # Escanear directorio
-clamscan -r /home/user/Downloads
+clamscan -r $HOME/Downloads
 
 # Escanear y eliminar
-clamscan -r --remove /home/user/Downloads
+clamscan -r --remove $HOME/Downloads
 
 # Análisis programado
 sudo clamdscan /

@@ -221,7 +221,7 @@ Linux Security Module. Mandatory Access Control (MAC) basado en paths.
 ```
 ┌─────────────────────────────────────────┐
 │  AppArmor Profile (/etc/apparmor.d/)   │
-│  ├─ Path rules: /home/** rw            │
+│  ├─ Path rules: $HOME/** rw            │
 │  ├─ Capability rules: deny sys_admin    │
 │  ├─ Network rules: network inet stream │
 │  └─ Mount rules: deny mount             │
