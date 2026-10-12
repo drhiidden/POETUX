@@ -6,7 +6,7 @@
 [![Python](https://img.shields.io/badge/Python-3.x-blue.svg)](https://python.org)
 [![Pop!_OS](https://img.shields.io/badge/Pop!__OS-22.04+-orange.svg)](https://pop.system76.com/)
 [![Version](https://img.shields.io/badge/version-1.3.0-brightgreen.svg)](CHANGELOG.md)
-![visitors](https://komarev.com/ghpvc/?username=drhiidden&repo=POETUX&color=00ff88&style=flat-square)
+[![views](https://komarev.com/ghpvc/?username=lab-poetux&label=views&color=0e75b6)](https://github.com/drhiidden/POETUX)
 
 **Your Pop!_OS, automated.**
 
